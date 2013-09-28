@@ -1,0 +1,1 @@
+export(matrixBC.BIC,matrixBC,sparseBC,sparseBC.choosekr,sparseBC.BIC)
