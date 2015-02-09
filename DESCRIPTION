@@ -1,14 +1,15 @@
 Package: sparseBC
 Type: Package
-Title: Sparse biclustering of transposable data.
-Version: 1.0
-Date: 2013-09-28
+Title: Sparse Biclustering of Transposable Data
+Version: 1.1
+Date: 2015-02-09
 Author: Kean Ming Tan
 Maintainer: Kean Ming Tan <keanming@u.washington.edu>
 Depends: glasso
-Description: Implements the sparse biclustering proposal of "Tan and Witten (2013), Sparse biclustering of transposable data, to appear in Journal of Computational and Graphical Statistics".
+Imports: fields
+Description: Implements the sparse biclustering proposal of Tan and Witten (2014), Sparse biclustering of transposable data. Journal of Computational and Graphical Statistics  23(4):985-1008.
 License: GPL (>= 2)
-Packaged: 2013-10-02 21:03:37 UTC; keanming
+Packaged: 2015-02-15 02:12:51 UTC; keanmingtan
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-10-03 00:12:05
+Date/Publication: 2015-02-15 07:35:48

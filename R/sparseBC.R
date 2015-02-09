@@ -1,5 +1,7 @@
 sparseBC <-
 function(x,k,r,lambda,nstart=20, Cs.init=NULL, Ds.init=NULL, max.iter=1000,threshold=1e-10,center=TRUE){
+	
+	
     if(is.null(Cs.init)){
       Cs <- (kmeans(x, k,nstart=nstart)$cluster)
     } else {
@@ -10,13 +12,14 @@ function(x,k,r,lambda,nstart=20, Cs.init=NULL, Ds.init=NULL, max.iter=1000,thres
     } else {
       Ds <- Ds.init
     }
-    
+    	
     if(center==TRUE)
     {
     	mustemp <- mean(x)
     	x <- x-mustemp
     }
     
+    cl <- match.call()
 	mus <- UpdateMus(x, Cs, Ds,lambda=lambda)
 	objs <- 1e15
 	improvement <- 1e10
@@ -41,12 +44,32 @@ function(x,k,r,lambda,nstart=20, Cs.init=NULL, Ds.init=NULL, max.iter=1000,thres
 		i<-i+1
 	}
 	
-	if(i>max.iter){
+	if(i > max.iter){
 		warning("The algorithm has not converged by the specified maximum number of iteration")
 	}
 	
 	if(center==TRUE){
 		mus <- mus+mustemp
 	}
-	return(list(Cs=Cs,Ds=Ds,objs=tail(objs,1),mus=mus[Cs,Ds],Mus=mus,iteration=i))
+	
+ # return output
+ 	out <- list()
+ 	class(out) <- "sparseBC"	
+ 	out$Cs <- Cs
+ 	out$Ds <- Ds
+ 	out$objs <- objs
+ 	out$mus <- mus[Cs,Ds]
+ 	out$Mus <- mus
+ 	out$iteration <- i 	 	 		
+	out$cl <- cl
+	
+	return(out)
 }
+
+
+
+
+
+
+
+

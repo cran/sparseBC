@@ -25,7 +25,7 @@ A range of values of tuning parameters to be considered.  All values must be non
 }
 }
 \details{
-This implements the tuning parameter selection using BIC criterion for sparse biclustering as described in Section 5.2 in Tan and Witten (2013) 'Sparse biclustering of transposable data'.  The BIC criterion is BIC = np x log(RSS) + np log(q) where RSS is the usual residual sum of squares, and q is the number of non-zero bicluster mean in the output of sparseBC.  We select the value of lambda that leads to the smallest BIC.  
+This implements the tuning parameter selection using BIC criterion for sparse biclustering as described in Section 5.2 in Tan and Witten (2014) 'Sparse biclustering of transposable data'.  The BIC criterion is BIC = np x log(RSS) + np log(q) where RSS is the usual residual sum of squares, and q is the number of non-zero bicluster mean in the output of sparseBC.  We select the value of lambda that leads to the smallest BIC.  
 
 The data is centered to have mean 0 in this function.
 
@@ -36,8 +36,8 @@ The data is centered to have mean 0 in this function.
 \item{nonzeromus}{Number of nonzero bicluster means for a range of tuning parameters considered.}
 }
 \references{
-KM Tan and D Witten (2013) Sparse biclustering of transposable data.  To appear in Journal of Computational and Graphical Statistics (2013).}
-
+KM Tan and D Witten (2014) Sparse biclustering of transposable data.  \emph{Journal of Computational and Graphical Statistics} 23(4):985-1008.
+}
 \author{
 Kean Ming Tan and Daniela Witten
 }

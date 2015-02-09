@@ -31,7 +31,7 @@ Percentage of elements of x to be left out for cross-validation.  1 must be divi
   } 
 }
 \details{
-The function performs cross-validation as described in Algorithm (2) in Tan and Witten (2013) 'Sparse biclustering of transposable data'.  Briefly, it works as follows: (1) some percent of the elements of x is removed at random from the data matrix - call those elements missing elements, (2) the missing elements are imputed using the mean of the other elements of the matrix, (3) sparse biclustering is performed with various values of K and R and the mean matrix is estimated, (4) calculate the sum of squared error of the missing values between x and the estimated mean matrix.  This procedure is repeated 1/percent times.  Finally, we select K and R based on the criterion described in Algorithm (2) in Tan and Witten (2013).  A similar procedure is used in Witten et al (2009) 'A penalized matrix decomposition, with applications to sparse principal components and canonical correlation analysis'.     
+The function performs cross-validation as described in Algorithm (2) in Tan and Witten (2014) 'Sparse biclustering of transposable data'.  Briefly, it works as follows: (1) some percent of the elements of x is removed at random from the data matrix - call those elements missing elements, (2) the missing elements are imputed using the mean of the other elements of the matrix, (3) sparse biclustering is performed with various values of K and R and the mean matrix is estimated, (4) calculate the sum of squared error of the missing values between x and the estimated mean matrix.  This procedure is repeated 1/percent times.  Finally, we select K and R based on the criterion described in Algorithm (2) in Tan and Witten (2014).  A similar procedure is used in Witten et al (2009) 'A penalized matrix decomposition, with applications to sparse principal components and canonical correlation analysis'.     
 
 Note that sparseBC is run with center=TRUE in this function.  
 }
@@ -41,7 +41,7 @@ Note that sparseBC is run with center=TRUE in this function.
 \item{results.se}{Standard error of the sum of squared error for all values of K and R considered.}
 }
 \references{
-KM Tan and D Witten (2013) Sparse biclustering of transposable data.  To appear in Journal of Computational and Graphical Statistics (2013).
+KM Tan and D Witten (2014) Sparse biclustering of transposable data.  \emph{Journal of Computational and Graphical Statistics} 23(4):985-1008.
 
 D Witten, R Tibshirani, and T Hastie (2009) A penalized matrix decomposition, with applications to sparse principal components and canonical correlation analysis, \emph{Biostatistics} {10(3)}, 515--534.
 }
@@ -58,21 +58,21 @@ Kean Ming Tan and Daniela Witten
 \examples{
 
 ########### Create data matrix with K=2 R=4 row and column clusters 
-k <- 2
-r <- 4
-n <- 200
-p <- 200
-  mus<-runif(k*r,-3,3)
-  mus<-matrix(c(mus),nrow=k,ncol=r,byrow=FALSE)
-  truthCs<-sample(1:k,n,rep=TRUE)
-  truthDs<-sample(1:r,p,rep=TRUE)
-  x<-matrix(rnorm(n*p,mean=0,sd=2),nrow=n,ncol=p)
-  for(i in 1:max(truthCs)){
-     for(j in 1:max(truthDs)){ 
-         x[truthCs==i, truthDs==j] <- x[truthCs==i, truthDs==j] + mus[i,j]
-    }
-  }
-  x<-x-mean(x)
+#k <- 2
+#r <- 4
+#n <- 200
+#p <- 200
+#  mus<-runif(k*r,-3,3)
+#  mus<-matrix(c(mus),nrow=k,ncol=r,byrow=FALSE)
+#  truthCs<-sample(1:k,n,rep=TRUE)
+#  truthDs<-sample(1:r,p,rep=TRUE)
+#  x<-matrix(rnorm(n*p,mean=0,sd=2),nrow=n,ncol=p)
+#  for(i in 1:max(truthCs)){
+#     for(j in 1:max(truthDs)){ 
+#         x[truthCs==i, truthDs==j] <- x[truthCs==i, truthDs==j] + mus[i,j]
+#    }
+#  }
+#  x<-x-mean(x)
 
 # Example is commented out for short run-time	
 ############ Perform sparseBC.choosekr to choose the number of row and column clusters

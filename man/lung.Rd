@@ -27,7 +27,7 @@ Bhattacharjee et al. (2001) Classification of human lung carcinomas by mRNA expr
 	
 Used as an example in Lee, Shen, Huang, and Marron (2010), 'Biclustering via sparse singular value decomposition', Biometrics 66(4), 1087--1095.
 
-Used as an example in Tan and Witten (2013), 'Sparse biclustering of transposable data', to appear in Journal of Computational and Graphical Statistics.  
+Used as an example in KM Tan and D Witten (2014) Sparse biclustering of transposable data.  \emph{Journal of Computational and Graphical Statistics} 23(4):985-1008.
 }
 \examples{
 data(lung)

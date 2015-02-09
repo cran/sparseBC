@@ -4,7 +4,7 @@
 MVN biclustering
 }
 \description{
-This function performs MVN biclustering on a n by p matrix.  Details are given in Tan and Witten (2013).  
+This function performs MVN biclustering on a n by p matrix.  Details are given in Tan and Witten (2014).  
 }
 \usage{
 matrixBC(x, k, r, lambda, alpha, beta, nstart = 20, Cs.init = NULL,
@@ -47,26 +47,30 @@ Maximum number of iterations.  The default value is 50 iterations.
 Threshold value for convergence.  The default is 1e-4.     
 }
   \item{Sigma.init}{
-Starting values for the covariance matrix of the observations.  The default value is NULL -- the graphical lasso as described in  Friedman, Hastie, and Tibshirani (2007) is performed to estimate the covariance matrix of the observations. 
+Starting values for the covariance matrix of the observations.  The default value is NULL -- the graphical lasso as described in Friedman, Hastie, and Tibshirani (2008) is performed to estimate the covariance matrix of the observations. 
 }
   \item{Delta.init}{
-Starting values for the covariance matrix of the features.  The default value is NULL -- the graphical lasso as described in  Friedman, Hastie, and Tibshirani (2007) is performed to estimate the covariance matrix of the features. 
+Starting values for the covariance matrix of the features.  The default value is NULL -- the graphical lasso as described in  Friedman, Hastie, and Tibshirani (2008) is performed to estimate the covariance matrix of the features. 
 }
   \item{center}{
 Mean center the data matrix before performing sparse biclustering.  The default is TRUE.
 }
 }
 \details{
- This implements MVN biclustering using Algorithm (3) described in Tan and Witten (2013) 'Sparse biclustering of transposable data'.  This approach takes into account the correlation among the features  within the same cluster and also takes into account the correlation among the observations within the same cluster.  The row labels for the observations and column labels for the features are estimated and the mean of each bicluster is encouraged to be sparse using the lasso penalty.  Details are given in Algorithm (3) in Tan and Witten (2013).  
+ This implements MVN biclustering using Algorithm (3) described in Tan and Witten (2014) 'Sparse biclustering of transposable data'.  This approach takes into account the correlation among the features  within the same cluster and also takes into account the correlation among the observations within the same cluster.  The row labels for the observations and column labels for the features are estimated and the mean of each bicluster is encouraged to be sparse using the lasso penalty.  Details are given in Algorithm (3) in Tan and Witten (2014).  
  
-If Sigma.init and Delta.init are NULL, the graphical lasso in Friedman, Hastie, and Tibshirani (2007) is used to estimated the covariance matrix of the observations and features.  If Sigma.init is provided, then the covariance matrices would not be updated in the algorithm. Note that when Sigma and Delta equal the identity matrix up to a scaling factor, this approach is exactly that of sparse biclustering and the function sparseBC should be used.  
+If Sigma.init and Delta.init are NULL, the graphical lasso in Friedman, Hastie, and Tibshirani (2008) is used to estimated the covariance matrix of the observations and features.  If Sigma.init is provided, then the covariance matrices would not be updated in the algorithm. Note that when Sigma and Delta equal the identity matrix up to a scaling factor, this approach is exactly that of sparse biclustering and the function sparseBC should be used.  
 
-Note that most of the computation time comes from the graphical lasso algorithm.  We recommend setting the tuning parameters alpha and beta to be large so that the graphical lasso can be implemented efficiently (See the glasso package).  When n >> p, alpha=0 will return an error.  Similarly, when p >> n, beta=0 will return an error.
+Note that most of the computation time comes from the graphical lasso algorithm.  We recommend setting the tuning parameters alpha and beta to be large so that the graphical lasso can be implemented efficiently (see the glasso package).  When n > p, alpha=0 will return an error.  Similarly, when p > n, beta=0 will return an error.
 
 If center=TRUE, the data matrix x is mean centered before performing sparse biclustering.  The reported mean matrix mus is the addition of the substracted mean, mean(x), and the estimated mean matrix from sparse biclustering on the mean centered data.   
      
 }
 \value{
+an object of class matrixBC.  
+
+Among some internal variables, this object includes the elements
+
 \item{Cs}{Cs is the output for the row labels.}
 \item{Ds}{Ds is the output for the column labels.}
 \item{mus}{mus is the estimated mean matrix for the entire matrix.}
@@ -77,9 +81,9 @@ If center=TRUE, the data matrix x is mean centered before performing sparse bicl
 \item{iteration}{The number of iterations until convergence.}
 }
 \references{
-KM Tan and D Witten (2013) Sparse biclustering of transposable data.  To appear in Journal of Computational and Graphical Statistics (2013).
+KM Tan and D Witten (2014) Sparse biclustering of transposable data.  \emph{Journal of Computational and Graphical Statistics} 23(4):985-1008.
 
-J Friedman, T Hastie, and R Tibshirani (2007). Sparse inverse covariance estimation with the lasso.  \emph{Biostatistics} 9, 432--441.
+J Friedman, T Hastie, and R Tibshirani (2008). Sparse inverse covariance estimation with the lasso.  \emph{Biostatistics} 9, 432--441.
 }
 \author{
 Kean Ming Tan and Daniela Witten
@@ -91,6 +95,8 @@ Kean Ming Tan and Daniela Witten
 \seealso{
 \code{\link{sparseBC}}
 \code{\link{matrixBC.BIC}}
+\code{\link{summary.matrixBC}}
+\code{\link{image.matrixBC}}
 }
 \examples{
 # Lung cancer data
@@ -98,7 +104,7 @@ Kean Ming Tan and Daniela Witten
 #data(lung)
 #truecluster<-as.numeric(as.factor(rownames(lung)))
 #cancersd<-apply(lung,2,sd)
-# Pick the top 200 genes that have the largest standard deviation
+# Pick the top 400 genes that have the largest standard deviation
 #lung<-lung[,rank(cancersd)>=length(cancersd)-399]
 
 # Example of MVN Biclustering
@@ -112,4 +118,11 @@ Kean Ming Tan and Daniela Witten
 #res2<-sparseBC(lung,k=4,r=10,lambda=230)
 # a few observations are being misclassified
 #res2$Cs
+
+# print information from the object matrixBC
+#summary(res)
+
+# Plot the estimated mean matris for the object matrixBC
+#image(res)
+
 }

@@ -4,7 +4,7 @@
 Sparse biclustering
 }
 \description{
-This function performs sparse biclustering on an n by p matrix.  Details are given in Tan and Witten (2013).  
+This function performs sparse biclustering on an n by p matrix.  Details are given in Tan and Witten (2014).  
 }
 \usage{
 sparseBC(x, k, r, lambda, nstart = 20, Cs.init = NULL, Ds.init = NULL,
@@ -45,7 +45,7 @@ Mean center the data matrix before performing sparse biclustering.  The default 
 
 }
 \details{
- This implements sparse biclustering using Algorithm (1) described in Tan and Witten (2013) 'Sparse biclustering of transposable data', which estimates the  row labels for the observations and column labels for the features.  The mean of each bicluster is encouraged to be sparse using the lasso penalty.  Details are given in Algorithm (1) in Tan and Witten (2013). 
+ This implements sparse biclustering using Algorithm (1) described in Tan and Witten (2014) 'Sparse biclustering of transposable data', which estimates the  row labels for the observations and column labels for the features.  The mean of each bicluster is encouraged to be sparse using the lasso penalty.  Details are given in Algorithm (1) in Tan and Witten (2014). 
  
 If center=TRUE, the data matrix x is mean centered before performing sparse biclustering.  The reported mean matrix mus is the addition of the substracted mean, mean(x), and the estimated mean matrix from sparse biclustering on the mean centered data. 
 
@@ -53,6 +53,10 @@ Note that center=TRUE will not give any estimated mean to be zero, unless the da
 
  }
 \value{
+an object of class sparseBC.  
+
+Among some internal variables, this object includes the elements
+
 \item{Cs}{Cs is the output for the row labels.}
 \item{Ds}{Ds is the output for the column labels.}
 \item{objs}{objs is the minimized objective value of the l1 penalized log-likelihood.}
@@ -62,7 +66,7 @@ Note that center=TRUE will not give any estimated mean to be zero, unless the da
 }
 
 \references{
-KM Tan and D Witten (2013) Sparse biclustering of transposable data.  To appear in Journal of Computational and Graphical Statistics (2013).
+KM Tan and D Witten (2014) Sparse biclustering of transposable data.  \emph{Journal of Computational and Graphical Statistics} 23(4):985-1008.
 }
 \author{
 Kean Ming Tan and Daniela Witten
@@ -71,6 +75,8 @@ Kean Ming Tan and Daniela Witten
 \seealso{
 \code{\link{sparseBC.BIC}}
 \code{\link{sparseBC.choosekr}}
+\code{\link{summary.sparseBC}}
+\code{\link{image.sparseBC}}
 }
 
 \examples{
@@ -112,12 +118,19 @@ for(i in 1:n){
 
 # Perform sparse biclustering with 5 row clusters and 5 column clusters and lambda=0
 bicluster<-sparseBC(x,5,5,0)
-bc.mus<-bicluster$mus
+
+
+# Display some information on the object sparseBC
+summary(bicluster)
+
 
 # Image plots to illustrate the estimated mean matrix
 par(mfrow=c(2,2))
-image(x,main="x")
-image(musmatrix,main="mean matrix")
-image(km.mus,main="kmeans mean")
-image(bc.mus,main="sparseBC mean")
+image(t(x),main="x")
+image(t(musmatrix),main="Mean Matrix")
+image(t(km.mus),main="Kmeans")
+image(t(bicluster$mus),main="sparseBC")
+
+# Built-in image plot for object sparseBC
+image(bicluster)
 }

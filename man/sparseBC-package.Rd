@@ -5,7 +5,7 @@
 Fit sparse biclustering and matrix-variate normal biclustering
 }
 \description{
-This package is called sparseBC, for "Sparse biclustering".  It implements two methods:Sparse biclustering and matrix-variate normal biclustering.  All are described in the paper "Sparse biclustering of tranposable data", by KM Tan and D Witten, to appear in Journal of Computational and Graphical Statistics (2013).
+This package is called sparseBC, for "Sparse biclustering".  It implements two methods:Sparse biclustering and matrix-variate normal biclustering.  All are described in the paper "Sparse biclustering of tranposable data", by KM Tan and D Witten (2014), \emph{Journal of Computational and Graphical Statistics}.
 
 The main functions are as follows:
 (1) sparseBC
@@ -17,8 +17,8 @@ The first function, sparseBC, performs sparse biclustering.  matrixBC performs m
 \tabular{ll}{
 Package: \tab sparseBC\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2013-09-28\cr
+Version: \tab 1.1\cr
+Date: \tab 2015-02-09\cr
 License: \tab GPL (>=2.0) \cr
 LazyLoad: \tab yes \cr
 }
@@ -29,6 +29,8 @@ The package includes the following functions:
 \code{\link{sparseBC}}: \tab Perform sparse biclustering\cr
 \code{\link{sparseBC.choosekr}}: \tab Cross-validation to select the number of row and column clusters	\cr
 \code{\link{sparseBC.BIC}}: \tab Select sparsity tuning parameter for sparseBC \cr
+\code{\link{summary.sparseBC}}: \tab Display information for the object sparseBC \cr
+\code{\link{image.sparseBC}}: \tab Image plot for the estimated bicluster mean matrix \cr
 \code{\link{matrixBC}}:\tab Perform matrix-variate normal biclustering \cr
 \code{\link{matrixBC.BIC}}:\tab Select sparsity tuning parameter for matrixBC\cr
 }
@@ -41,7 +43,7 @@ Kean Ming Tan
 Maintainer: Kean Ming Tan <keanming@u.washington.edu>
 }
 \references{
-KM Tan and D Witten (2013) Sparse biclustering of tranposable data.  To appear in Journal of Computational and Graphical Statistics.
+KM Tan and D Witten (2014) Sparse biclustering of transposable data.  \emph{Journal of Computational and Graphical Statistics} 23(4):985-1008.
 }
 \seealso{
 \code{\link{sparseBC}}
@@ -52,16 +54,16 @@ KM Tan and D Witten (2013) Sparse biclustering of tranposable data.  To appear i
 \examples{
 # An example that violates the assumption of contiguous biclusters
 # Create mean matrix and the data matrix
-set.seed(5)
-u<-c(10,9,8,7,6,5,4,3,rep(2,17),rep(0,75))
-v<-c(10,-10,8,-8,5,-5,rep(3,5),rep(-3,5),rep(0,34))
-u<-u/sqrt(sum(u^2))
-v<-v/sqrt(sum(v^2))
-d<-50
-mus<-d*tcrossprod(u,v)
-binaryX<-(mus!=0)*1
-X<-mus+matrix(rnorm(100*50),100,50)
-X<-X-mean(X)
+#set.seed(5)
+#u<-c(10,9,8,7,6,5,4,3,rep(2,17),rep(0,75))
+#v<-c(10,-10,8,-8,5,-5,rep(3,5),rep(-3,5),rep(0,34))
+#u<-u/sqrt(sum(u^2))
+#v<-v/sqrt(sum(v^2))
+#d<-50
+#mus<-d*tcrossprod(u,v)
+#binaryX<-(mus!=0)*1
+#X<-mus+matrix(rnorm(100*50),100,50)
+#X<-X-mean(X)
 
 # The number of biclusters are chosen automatically
 # Commented out for short run-time
@@ -74,8 +76,10 @@ X<-X-mean(X)
 
 # Perform sparse biclustering using the K, R, and lambda chosen
 #biclustering<-sparseBC(X,k,r,lambda)
-#par(mfrow=c(1,3))
-#image(X,main="x")
-#image(mus,main="true mean")
-#image(biclustering$mus,main="estimated mean")
-#}
+
+# Display some information on the object sparseBC
+#summary(biclustering)
+
+# Plot the estimated mean matrix from sparseBC
+#image(biclustering)
+}

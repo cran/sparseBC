@@ -19,6 +19,7 @@ function(x,k,r,lambda,alpha,beta,nstart=20,Cs.init=NULL,Ds.init=NULL,max.iter=50
     	x <- x-mustemp
   }
   
+  cl <- match.call()
   Cslist<-list()
   Dslist<-list()
 
@@ -92,5 +93,18 @@ function(x,k,r,lambda,alpha,beta,nstart=20,Cs.init=NULL,Ds.init=NULL,max.iter=50
 		mus <- mus+mustemp
   }
  # if(improvement>1) stop("This is bad!!!")
-  return(list(Cs=Cslist[[i-1]],Ds=Dslist[[i-1]],mus=mus[Cs,Ds],Mus=mus,Sigma=Sigma,Delta=Delta,objs=objs,iteration=i))
+ 
+  out <- list()
+  class(out) <- "matrixBC"
+  out$Cs <- Cslist[[i-1]]
+  out$Ds <- Dslist[[i-1]]
+  out$objs <- objs
+  out$mus <- mus[out$Cs,out$Ds]
+  out$Mus <- mus
+  out$Sigma <- Sigma
+  out$Delta <- Delta
+  out$iteration <- i
+  out$cl <- cl
+    
+  return(out)  
 }
