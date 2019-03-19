@@ -93,7 +93,7 @@ CalculateBIC <- function(x,biclustobj){
 			}
 		}
 	}
-	mat[biclustobj$mus==0] <- mean(x[biclustobj$mus==0])
+	mat[abs(biclustobj$mus)<=1e-8] <- mean(x[abs(biclustobj$mus)<=1e-8])
 	return(log(sum((x-mat)^2))*nrow(x)*ncol(x) + log(nrow(x)*ncol(x))*sum(biclustobj$Mus!=0))
 }
 
